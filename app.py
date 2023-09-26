@@ -11,7 +11,7 @@ def predict(prompt, language, audio_file_pth, agree):
             text=prompt,
             file_path="output.wav",
             speaker_wav=audio_file_pth,
-            language=language,
+            language=language_mapping.get(language, "Desconocido"),
         )
 
         return (
@@ -24,17 +24,18 @@ def predict(prompt, language, audio_file_pth, agree):
         gr.Warning("Please accept the Terms & Condition!")
 
 
-title = "Coqui🐸 XTTS"
+title = """Coqui🐸 XTTS <a href="https://www.youtube.com/channel/UC1ejkTHsiq8aQAeYIZyIyeg">Visita mi Canal: IA (Sistema de interes)</a>"""
 
 description = """
-<a href="https://huggingface.co/coqui/XTTS-v1">XTTS</a> is a Voice generation model that lets you clone voices into different languages by using just a quick 3-second audio clip. 
+<a href="https://huggingface.co/coqui/XTTS-v1">XTTS</a> es un modelo de generación de voz que te permite clonar voces en diferentes idiomas usando solo un clip de audio rápido de 3 segundos. 
 <br/>
-Built on Tortoise, XTTS has important model changes that make cross-language voice cloning and multi-lingual speech generation super easy. 
+XTTS se basa en investigaciones anteriores, como Tortoise, con innovaciones arquitectónicas adicionales y capacitación para hacer posible la clonación de voz en varios idiomas y la generación de voz multilingüe.
 <br/>
-This is the same model that powers Coqui Studio, and Coqui API, however we apply a few tricks to make it faster and support streaming inference.
+Este es el mismo modelo que impulsa nuestra aplicación creadora <a href="https://coqui.ai">Coqui Studio</a>, así como <a href="https://docs.coqui.ai"> API Coqui</a>. En producción aplicamos modificaciones para hacer posible la transmisión de baja latencia.
 <br/>
+Deje una estrella en Github <a href="https://github.com/coqui-ai/TTS">🐸TTS</a>, donde reside nuestro código de entrenamiento e inferencia de código abierto.
 <br/>
-<p>For faster inference without waiting in the queue, you should duplicate this space and upgrade to GPU via the settings.
+<p>Para una inferencia más rápida sin esperar en la cola, debe duplicar este espacio y actualizar a GPU a través de la configuración.
 <br/>
 <a href="https://huggingface.co/spaces/coqui/xtts?duplicate=true">
 <img style="margin-top: 0em; margin-bottom: 0em" src="https://bit.ly/3gLdBN6" alt="Duplicate Space"></a>
@@ -43,30 +44,25 @@ This is the same model that powers Coqui Studio, and Coqui API, however we apply
 
 article = """
 <div style='margin:20px auto;'>
-<p>By using this demo you agree to the terms of the Coqui Public Model License at https://coqui.ai/cpml</p>
+<p>Al utilizar esta demostración, acepta los términos de la Licencia de modelo público de Coqui en https://coqui.ai/cpml</p>
 </div>
 """
 
-examples = [
-    [
-        "Once when I was six years old I saw a magnificent picture.",
-        "en",
-        "examples/female.wav",
-        True,
-    ],
-    [
-        "Lorsque j'avais six ans j'ai vu, une fois, une magnifique image.",
-        "fr",
-        "examples/male.wav",
-        True,
-    ],
-    [
-        "Un tempo lontano, quando avevo sei anni, vidi un magnifico disegno.",
-        "it",
-        "examples/female.wav",
-        True,
-    ],
-]
+language_mapping = {
+    'English': 'en',
+    'Spanish': 'es',
+    'French': 'fr',
+    'German': 'de',
+    'Italian': 'it',
+    'Portuguese': 'pt',
+    'Polish': 'pl',
+    'Turkish': 'tr',
+    'Russian': 'ru',
+    'Dutch': 'nl',
+    'Czech': 'cs',
+    'Arabic': 'ar',
+    'Chinese (Simplified)': 'zh'
+}
 
 gr.Interface(
     fn=predict,
@@ -80,19 +76,19 @@ gr.Interface(
             label="Language",
             info="Select an output language for the synthesised speech",
             choices=[
-                "en",
-                "es",
-                "fr",
-                "de",
-                "it",
-                "pt",
-                "pl",
-                "tr",
-                "ru",
-                "nl",
-                "cz",
-                "ar",
-                "zh",
+                "Arabic",
+                "Chinese (Simplified)",
+                "Czech",
+                "Dutch",
+                "English",
+                "French",
+                "German",
+                "Italian",
+                "Polish",
+                "Portuguese",
+                "Russian",
+                "Spanish",
+                "Turkish",
             ],
             max_choices=1,
             value="en",
@@ -116,5 +112,5 @@ gr.Interface(
     title=title,
     description=description,
     article=article,
-    examples=examples,
-).queue().launch(debug=True)
+    examples="",
+).queue().launch(share=True)
