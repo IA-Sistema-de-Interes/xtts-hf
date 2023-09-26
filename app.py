@@ -91,7 +91,7 @@ gr.Interface(
                 "Turkish",
             ],
             max_choices=1,
-            value="en",
+            value="English",
         ),
         gr.Audio(
             label="Reference Audio",
