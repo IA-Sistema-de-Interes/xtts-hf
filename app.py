@@ -61,7 +61,7 @@ language_mapping = {
     'Dutch': 'nl',
     'Czech': 'cs',
     'Arabic': 'ar',
-    'Chinese (Simplified)': 'zh'
+    'Chinese (Simplified)': 'zh-cn'
 }
 
 gr.Interface(
